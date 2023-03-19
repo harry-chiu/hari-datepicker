@@ -21,6 +21,7 @@ import {
 
 const DatePicker = () => {
   const [current, setCurrent] = React.useState(dayjs().format('YYYY-MM-DD'));
+  const [selectedDate, setSelectedDate] = React.useState(null);
   const calendar = getCalendar(current);
 
   const goPrevMonth = () => {
@@ -29,6 +30,10 @@ const DatePicker = () => {
 
   const goNextMonth = () => {
     setCurrent(dayjs(current).add(1, 'month'));
+  };
+
+  const handleClick = newDate => () => {
+    setSelectedDate(newDate);
   };
 
   return (
@@ -49,11 +54,14 @@ const DatePicker = () => {
             ))}
           </WeekdayRow>
 
-          {calendar.map(week => (
-            <DateRow key={String(week)}>
-              {week.map(day => (
-                <DateColumn>
-                  <ColumnText>{dayjs(day).format('D')}</ColumnText>
+          {calendar.map(datesOfWeek => (
+            <DateRow key={String(datesOfWeek)}>
+              {datesOfWeek.map(date => (
+                <DateColumn
+                  isSelect={selectedDate === date}
+                  onClick={handleClick(date)}
+                >
+                  <ColumnText>{dayjs(date).format('D')}</ColumnText>
                 </DateColumn>
               ))}
             </DateRow>

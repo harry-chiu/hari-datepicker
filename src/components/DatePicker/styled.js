@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: inline-flex;
-  color: #303030;
+  color: #606060;
 
   * {
     box-sizing: border-box;
@@ -50,10 +50,36 @@ const Column = styled.div`
   justify-content: center;
   width: 40px;
   height: 40px;
+  user-select: none;
 `;
 
 export const WeekdayColumn = styled(Column)``;
 
-export const DateColumn = styled(Column)``;
+export const ColumnText = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+`;
 
-export const ColumnText = styled.div``;
+export const DateColumn = styled(Column)`
+  cursor: pointer;
+
+  &:hover {
+    ${ColumnText} {
+      color: #ffffff;
+      background: #97deff;
+    }
+  }
+
+  ${({ isSelect }) =>
+    isSelect &&
+    css`
+      ${ColumnText} {
+        color: #ffffff;
+        background: #62cdff;
+      }
+    `}
+`;
